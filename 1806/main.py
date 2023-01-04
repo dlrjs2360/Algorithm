@@ -12,11 +12,16 @@ if sum(arr) >= s:
 else:
     ans = 0
 
+# 부분합이 s이상인 가장 짧은 구간을 구해라!
+# 부분합을 구하는 가장 획기적이고 빠른 방법 = 누적합을 이용하는 것.
+
 # 누적합 구하기
 prefix = [0 for _ in range(n)]
 prefix[0] = arr[0]
 for i in range(1,n):
     prefix[i] = arr[i] + prefix[i-1]
+
+# 누적합[end] - 누적합[start] => 부분합
 
 # 투포인터로 가장 짧은 구간 구하기
 start, end = 0, n-1
@@ -36,6 +41,9 @@ while n-1 >= end >= 0:
         # 구간이 이미 가장 짧은 구간보다 작고 부분합이 s보다 크다면 end를 키워서 구간을 넓히기
         end += 1
     print()
+
+# 내가 짠 알고리즘에서 키포인트는 구간의 길이다
+
 
 # 누적합 첫번째 예외사항 고치기(0번을 무조건 뺴기 때문에 발생하는 예외)
 if prefix[0] >= s:
