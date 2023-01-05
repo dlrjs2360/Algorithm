@@ -3,8 +3,6 @@ import os
 path = os.path.dirname(os.path.abspath(__file__))
 sys.stdin = open(path+'/input.txt', "r")
 
-
-from collections import Counter
 s, p = map(int,input().split())
 arr = input()
 contain = list(map(int,input().split()))
