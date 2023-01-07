@@ -17,8 +17,7 @@ for _ in range(m):
 def dijkstra(start):
     dis = [[INF] * (k+1) for _ in range(n+1)]
     dis[start][0] = 0
-    Q = []
-    heapq.heappush(Q,(0,start,0))
+    Q = [(0,start,0)]
     while Q:
         l, node, cnt = heapq.heappop(Q)
         if dis[node][cnt] < l:
@@ -31,9 +30,9 @@ def dijkstra(start):
             if cnt < k and dis[next_node][cnt+1] > l:
                 dis[next_node][cnt+1] = l
                 heapq.heappush(Q, (l, next_node, cnt+1))
-    return dis
+    return min(dis[n])
 
-print(min(dijkstra(1)[n]))
+print(dijkstra(1))
 
 
 
