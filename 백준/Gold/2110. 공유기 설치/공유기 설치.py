@@ -1,3 +1,6 @@
+import sys
+input = sys.stdin.readline
+
 n, c = map(int,input().split())
 house = [int(input()) for _ in range(n)]
 house.sort()
