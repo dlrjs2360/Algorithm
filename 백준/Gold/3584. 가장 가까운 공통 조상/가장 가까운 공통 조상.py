@@ -1,36 +1,53 @@
 import sys
-sys.setrecursionlimit(10**7)
+sys.setrecursionlimit(10 ** 6)
+input = sys.stdin.readline
 
-T = int(input())
-for _ in range(T):
-    n = int(input())
+def solve():
+    T = int(input())
 
-    parent = [0] * (n + 1)
-    for _ in range(n-1):
-        a,b = map(int,input().split())
-        parent[b] = a
+    for _ in range(T):
+        N = int(input())
+        parent = [-1] * (N + 1)
 
-    x,y = map(int, input().split())
-    y_parent = [y]
+        for _ in range(N - 1):
+            a, b = map(int, input().split())
+            parent[b] = a
+        
+        A, B = map(int, input().split())
+    
+        q1 = []
+        q2 = []
 
-    node = y
-    while 1:
-        parent_node = parent[node]
-        if parent_node == 0:
-            break
-        y_parent.append(parent_node)
-        node = parent_node
+        q1.append(A)
+        q2.append(B)
 
-    if x in y_parent:
-        answer = x
-    else:
-        answer = 0
-        node = x
-        while 1:
-            parent_node = parent[node]
-            if parent_node in y_parent:
-                answer = parent_node
+        while True:
+            value = parent[A]
+
+            if value == -1:
                 break
-            node = parent_node
 
-    print(answer)
+            q1.append(value)
+            A = value
+
+        while True:
+            value = parent[B]
+
+            if value == -1:
+                break
+
+            q2.append(value)
+            B = value
+            
+        ans = -1
+        for a in q1:
+            for b in q2:
+                if a == b:
+                    ans = a
+                    break
+            if ans != -1:
+                break
+
+        print(ans)
+
+solve()
