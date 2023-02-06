@@ -6,6 +6,8 @@ def dijkstra(start):
     dis[start] = 0
     while next:
         l, node = heapq.heappop(next)
+        if l > dis[node]:
+            continue
         for x in sorted(graph[node]):
             nl, next_node = x
             if l+nl < dis[next_node]:
