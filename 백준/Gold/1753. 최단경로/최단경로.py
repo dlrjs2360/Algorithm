@@ -1,5 +1,7 @@
 import heapq
+import sys
 from collections import defaultdict
+input = sys.stdin.readline
 def dijkstra(start):
     next = [(0,start)]
     dis = [1e9] * (n+1)
