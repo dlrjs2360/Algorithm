@@ -22,7 +22,7 @@ knew_num, *knew_person = map(int,input().split())
 if knew_num == 0:
     print(m)
 else:
-    knew_parent = sorted(knew_person)[0]
+    knew_parent = knew_person[0]
     for i in range(knew_num-1):
         a,b = knew_person[i],knew_person[i+1]
         union(a,b)
