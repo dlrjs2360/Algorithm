@@ -3,6 +3,7 @@ input = sys.stdin.readline
 
 def getParent(node):
     return (node-2)//k + 1
+
 def LCA(x,y):
     d = 0
     while x != y:
