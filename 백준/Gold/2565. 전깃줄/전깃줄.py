@@ -1,19 +1,14 @@
 import bisect
 
 def LIS(arr):
-    res = []
-    for x in arr:
-        if not res:
-            res.append(x)
-            continue
+    res = [arr[0]]
+    for x in arr[1:]:
         if x < res[-1]:
-            idx = bisect.bisect_left(res,x)
-            res[idx] = x
+            res[bisect.bisect_left(res,x)] = x
             continue
         res.append(x)
     return len(res)
 
 n = int(input())
-line = [list(map(int,input().split())) for _ in range(n)]
-line.sort(key=lambda x:x[0])
+line = sorted([list(map(int,input().split())) for _ in range(n)])
 print(n-LIS([x[1] for x in line]))
