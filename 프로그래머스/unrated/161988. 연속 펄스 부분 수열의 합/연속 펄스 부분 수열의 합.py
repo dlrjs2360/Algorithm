@@ -1,17 +1,8 @@
 def solution(sequence):
-    length = len(sequence)
-    pulse = lambda x : 1 if x % 2 else -1
-    sequence = [ pulse(idx) * sequence[idx] for idx in range(length) ]
-    
-    dp = [[0, 0] for _ in range(length)]
-    dp[0] = [sequence[0], sequence[0]]
-
-    for i in range(1, length) :
-        num = sequence[i]
-        dp[i][0] = min(num, num + dp[i-1][0])
-        dp[i][1] = max(num, num + dp[i-1][1])
-
-    min_val = min(map(min, dp))
-    max_val = max(map(max, dp))
-        
-    return max(abs(min_val), abs(max_val))
+    table = [[0 for _ in range(len(sequence) + 1)] for _ in range(2)]
+    weight = 1
+    for i in range(len(sequence)):
+        table[0][i + 1] = table[0][i] + sequence[i] * weight
+        table[1][i + 1] = table[1][i] - sequence[i] * weight
+        weight *= -1
+    return max(max(table[0]) - min(table[0]), max(table[1]) - min(table[1]))
