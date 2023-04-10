@@ -12,15 +12,12 @@ for _ in range(m):
 for k in range(1,n+1):
     for i in range(1,n+1):
         for j in range(1,n+1):
-            if i == j:
-                continue
             if graph[i][j] > graph[i][k]+graph[k][j]:
                 graph[i][j] = graph[i][k]+graph[k][j]
                 dp[i][j] = dp[i][k]
 
 for i in range(1,n+1):
-    for j in range(1,n+1):
-        dp[i][i] = "-"
+    dp[i][i] = "-"
 
 for x in dp[1:]:
     print(*x[1:])
