@@ -7,7 +7,6 @@ for x in arr:
     if not stack or x > stack[-1]:
         stack.append(x)
         continue
-    loc = bisect.bisect_left(stack,x)
-    stack[loc] = x
+    stack[bisect.bisect_left(stack,x)] = x
 
 print(n-len(stack))
