@@ -1,5 +1,5 @@
 n,t = map(int,input().split())
-chapter = sorted([list(map(int,input().split())) for _ in range(n)])
+chapter = [list(map(int,input().split())) for _ in range(n)]
 study = {0:0}
 for w,v in chapter:
     tmp = dict()
