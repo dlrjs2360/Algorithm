@@ -6,23 +6,16 @@
 from itertools import product
 
 def getPrice(emoticons,ratio,userRate):
-    tmp = 0
-    for i in range(len(emoticons)):
-        if ratio[i] >= userRate:
-            tmp += emoticons[i]*(100-ratio[i])//100
-    return tmp
+    return sum([(emoticons[i]*(100-ratio[i])//100) for i in range(len(emoticons)) if ratio[i] >= userRate])
 
 def solution(users, emoticons):
     answer = []
-    lu,le = len(users), len(emoticons)
-    arr = [10,20,30,40]
-    for ratio in product(arr,repeat = le):
+    for ratio in product([10,20,30,40],repeat = len(emoticons)):
         membership,total = 0,0
         for user in users:
             if (res:=getPrice(emoticons,ratio,user[0])) >= user[1]:
                 membership += 1
-            else:
-                total += res
+                continue
+            total += res
         answer.append([membership,total])
-    
     return sorted(answer,reverse = True)[0]
