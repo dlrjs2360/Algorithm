@@ -25,7 +25,10 @@ def solution(arrayA, arrayB):
 def GCD(a, b):
     if a % b == 0:
         return b
-    return GCD(b, a % b)
+    return GCD(b, a % b) 
+'''
+a와 b의 최대공약수는 b와 (a를 b로 나눈 나머지)의 최대공약수와 같다.
+'''
  
 # 나누어떨어지는지
 def isDiv(array, gcd):
