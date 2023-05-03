@@ -1,24 +1,38 @@
+import java.util.*;
+
 class Solution {
-    public int solution (int n, int[][] results){
-        boolean[][] game =  new boolean[n][n];
+    public int solution(int n, int[][] results) {
         int answer = 0;
-        for(int i=0; i<results.length; i++){ game[results[i][0]-1][results[i][1]-1]=true; }
 
-        for(int i=0; i<n; i++){
-            for(int j=0; j<n; j++){
-                for(int k=0; k<n; k++){
-                    if(game[j][i]&&game[i][k]){game[j][k]=true;}
-                }
+        Map<Integer, Set<Integer>> win = new HashMap<>();
+        Map<Integer, Set<Integer>> lose = new HashMap<>();
+
+        for (int i = 1; i <= n; i++) {
+            win.put(i, new HashSet<>());
+            lose.put(i, new HashSet<>());
+        }
+
+        for (int[] result : results) {
+            lose.get(result[1]).add(result[0]);
+            win.get(result[0]).add(result[1]);
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int winner : lose.get(i)) {
+                win.get(winner).addAll(win.get(i));
+            }
+
+            for (int loser : win.get(i)) {
+                lose.get(loser).addAll(lose.get(i));
             }
         }
 
-        for(int i=0; i<n; i++){
-            int result=0;
-            for(int j=0; j<n; j++){
-                if(game[i][j] || game[j][i]){result++;}
+        for (int i = 1; i <= n; i++) {
+            if (win.get(i).size() + lose.get(i).size() == n - 1) {
+                answer++;
             }
-            if(result==n-1){answer++;}
         }
+
         return answer;
     }
 }
