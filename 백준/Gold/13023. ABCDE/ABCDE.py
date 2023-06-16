@@ -11,6 +11,7 @@ def DFS(node,cnt):
             visit[fnext] = True
             DFS(fnext, cnt + 1)
             visit[fnext] = False
+            
 n,m = map(int,input().split())
 friends = [[] for _ in range(n)]
 for _ in range(m):
@@ -19,12 +20,10 @@ for _ in range(m):
     friends[b].append(a)
 
 answer = 0
-
 for start in range(n):
     visit = [False] * n
     visit[start] = True
     DFS(start,0)
-    if answer == 1:
-        break
+    if answer == 1: break
 
 print(answer)
