@@ -1,23 +1,22 @@
 n,m = 0,0
 move = [(0,1),(0,-1),(1,0),(-1,0)]
-visit = [[0]*5 for _ in range(5)]
 def OOB(x,y):
     return x < 0 or x >= n or y < 0 or y >= m
 
 # 결과값이 
 def play(board,curx,cury,opx,opy):
     global visit
-    if visit[curx][cury]: return 0
+    if board[curx][cury] == 0: return 0
     canWin = 0
     for mov in move:
         dx, dy = mov
         nx, ny = curx + dx, cury + dy
-        if OOB(nx,ny) or visit[nx][ny] or board[nx][ny] == 0 : continue
+        if OOB(nx,ny) or board[nx][ny] == 0 : continue
         # 방문처리
-        visit[curx][cury] = 1
+        board[curx][cury] = 0
         opResult = play(board,opx,opy,nx,ny)+1
         # 방문처리 끝
-        visit[curx][cury] = 0
+        board[curx][cury] = 1
 
         # 현재 저장된 값 패배인데 상대가 졌다고 하면 이기는 경우로 저장
         if canWin % 2 == 0 and opResult % 2 == 1 : canWin = opResult
