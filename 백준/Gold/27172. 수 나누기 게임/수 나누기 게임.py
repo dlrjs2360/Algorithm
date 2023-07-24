@@ -1,19 +1,15 @@
 n = int(input())
 card = list(map(int,input().split()))
-pcard = sorted([(i,card[i]) for i in range(n)],key=lambda x: x[1])
 
 visit = [False] * (int(1e6)+1)
-idx = {}
-for i,c in enumerate(card):
-    visit[c] = True
-    idx[c] = i
+for i,c in enumerate(card): visit[c] = True
 
 MAX = max(card)
-answer = [0] * n
-for i,x in pcard:
+answer = [0] * (MAX+1)
+for x in sorted(card):
     for j in range(x*2,MAX+1,x):
         if visit[j]:
-            answer[i] += 1
-            answer[idx[j]] -= 1
+            answer[x] += 1
+            answer[j] -= 1
 
-print(*answer)
+print(*[answer[x] for x in card])
