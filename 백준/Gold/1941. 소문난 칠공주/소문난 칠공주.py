@@ -1,37 +1,34 @@
 import sys
 input = sys.stdin.readline
 
-matrix = [input() for _ in range(5)]
-delta = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-result_set = set()
+std = {"Y" : 0, "S" : 1}
+check = {}
+seat = []
+count = 0
 
-def backtrack(arr, index=0, S=0, Y=0):
-    tmp = arr
-    if Y > 3:
+for _ in range(5):
+    s = list(map(lambda x: std[x], input().rstrip()))
+    seat.append(s)
+
+def placement(arr, bit, length, cnt_y):
+    global count
+    if cnt_y >= 4:
         return
-    if index == 6:
-        arr.sort()
-        result_set.add(tuple(arr))
-    else:
-        adjacents = []
-        for node in range(len(arr)):
-            for i in range(4):
-                dx = arr[node][0] + delta[i][0]
-                dy = arr[node][1] + delta[i][1]
-                if 0 > dx or 5 <= dx or 0 > dy or 5 <= dy: continue
-                if (dx, dy) in arr: continue
-                adjacents.append((dx,dy))
-        for adjacent in adjacents:
-            nx = adjacent[0]
-            ny = adjacent[1]
-            if matrix[nx][ny] == 'S':
-                backtrack(arr+[(nx,ny)], index+1, S+1, Y)
-            else:
-                backtrack(arr+[(nx,ny)], index+1, S, Y+1)
+    if length == 7:
+        count += 1
+        return
+    for x,y in arr:
+        for i,j in [x+1,y],[x-1,y],[x,y+1],[x,y-1]:
+            if 0 <= i < 5 and 0 <= j < 5:
+                sub_bit = 1 << (i * 5 + j)
+                new_bit = bit + sub_bit
+                if not bit & sub_bit and check.get(new_bit) == None:
+                    check[new_bit] = 1
+                    placement(arr + [[i,j]], new_bit, length+1, cnt_y+1 -seat[i][j])
 
 for i in range(5):
     for j in range(5):
-        if matrix[i][j] == 'S':
-            backtrack([(i, j)], index=0, S=1)
-
-print(len(result_set))
+        if seat[i][j] == 1:
+            start_bit = 1 << (i * 5 + j)
+            placement([[i,j]], start_bit, 1, 0)
+print(count)
