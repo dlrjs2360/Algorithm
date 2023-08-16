@@ -1,27 +1,15 @@
-import sys
-input = sys.stdin.readline
+from bisect import bisect_left
 
-n = int(input())
-arr = list(map(int, input().split()))
-store = [arr[0]]
-L = 1
+N = int(input())
+A = list(map(int,input().split()))
 
-for num in arr:
+arr = []
+for x in A:
+    if not arr:
+        arr.append(x)
+    elif x > arr[-1]:
+        arr.append(x)
+    elif x < arr[-1]:
+        arr[bisect_left(arr,x)] = x
 
-    if num > store[-1]:
-        store.append(num)
-        L += 1
-        continue
-
-    left = 0
-    right = L - 1
-    while left <= right:
-        mid = (left + right) // 2
-        if store[mid] < num:
-            left = mid + 1
-        else:
-            right = mid - 1
-    store[left] = num
-
-
-print(L)
+print(len(arr))
