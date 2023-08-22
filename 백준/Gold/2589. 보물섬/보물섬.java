@@ -21,22 +21,14 @@ public class Main {
 
         graph = new ArrayList<>();
         for (int i = 0; i < N; i++) graph.add(List.of(br.readLine().split("")));
-        List<List<Boolean>> visit = new ArrayList<>();
-        for (int i = 0; i < N; i++) {
-            visit.add(new ArrayList<>());
-            for (int j = 0; j < M; j++) {
-                visit.get(i).add(false);
-            }
-        }
+        boolean[][] visit;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
                 if (graph.get(i).get(j).equals("W")) continue;
-                for (int k = 0; k < N; k++) {
-                    visit.get(k).replaceAll((x) -> false);
-                }
+                visit = new boolean[N][M];
                 Deque<Node> queue = new ArrayDeque<>();
                 queue.add(new Node(0, i, j));
-                visit.get(i).set(j, true);
+                visit[i][j] = true;
                 while (!queue.isEmpty()) {
                     Node node = queue.pollFirst();
                     if (node.distance > answer) answer = node.distance;
@@ -44,10 +36,10 @@ public class Main {
                         int nx = node.x + dx[k];
                         int ny = node.y + dy[k];
                         if (nx >= N || nx < 0 || ny >= M || ny < 0
-                            || visit.get(nx).get(ny)
+                            || visit[nx][ny]
                             || graph.get(nx).get(ny).equals("W")) continue;
                         queue.addLast(new Node(node.distance + 1, nx, ny));
-                        visit.get(nx).set(ny, true);
+                        visit[nx][ny] = true;
                     }
                 }
             }
