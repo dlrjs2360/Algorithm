@@ -5,13 +5,8 @@ class Solution {
         String answer = "";
         Integer[] num = Arrays.stream(numbers).boxed().toArray(Integer[]::new);
 
-        Arrays.sort(num, new Comparator<Integer>(){
-            @Override
-            public int compare(Integer a, Integer b){
-                String sb = (b+"").repeat(4).substring(0,4);
-                String sa = (a+"").repeat(4).substring(0,4);
-                return Integer.parseInt(sb) - Integer.parseInt(sa);
-            }
+        Arrays.sort(num, (a,b) -> {
+            return Integer.parseInt((b+"")+(a+"")) - Integer.parseInt((a+"") + (b+""));
         });
 
         for (int number: num){
