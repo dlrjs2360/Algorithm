@@ -1,4 +1,3 @@
-
 import sys
 input = sys.stdin.readline
 # sys.setrecursionlimit(10**6)
@@ -25,6 +24,7 @@ for x,y in arr:
 heap = []
 heappush(heap,(0,Sr-1,Sc-1))
 dx,dy = [1,-1,0,0], [0,0,1,-1]
+visit = [[False] * M for _ in range(N)]
 while heap:
     cnt, x,y = heappop(heap)
     if x == Fr-1 and y == Fc-1:
@@ -32,9 +32,8 @@ while heap:
         break
     for i in range(4):
         nx,ny = x+dx[i], y+dy[i]
-        if nx < 0 or ny < 0 or nx > N-H or ny > M-W or graph[nx][ny] < 0: continue
-        if graph[nx][ny] != 0 and graph[nx][ny] <= cnt+1: continue
+        if nx < 0 or ny < 0 or nx > N-H or ny > M-W or graph[nx][ny] < 0 or visit[nx][ny]: continue
         heappush(heap,(cnt+1,nx,ny))
-        graph[nx][ny] = cnt+1
+        visit[nx][ny] = True
 else:
     print(-1)
