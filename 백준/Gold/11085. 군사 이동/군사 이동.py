@@ -15,15 +15,12 @@ for _ in range(W):
 
 answer = 1e9
 parent = list(range(P))
-while parent[C] != parent[V] and heap:
+while ancestor(C) != ancestor(V) and heap:
     c,a,b = heappop(heap)
     aa,bb = ancestor(a),ancestor(b)
     if aa == bb: continue
     answer = min(answer,-c)
     if aa > bb: parent[aa] = bb
     else: parent[bb] = aa
-
-    for i in range(P):
-        ancestor(i)
 
 print(answer)
