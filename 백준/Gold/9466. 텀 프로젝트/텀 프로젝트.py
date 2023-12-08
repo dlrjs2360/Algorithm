@@ -1,37 +1,35 @@
 import sys
 input = sys.stdin.readline
 sys.setrecursionlimit(10**6)
-def DFS(node):
+
+def dfs(i):
     global team
-
-    visit[node] = True
-    cycle.append(node)
-
-    next_node = arr[node]
-
-    if visit[next_node]:
-        if next_node in cycle:
-            team += cycle[cycle.index(next_node):]
+    next = choice[i]
+    if visit[next]:
+        if next in cycle:
+            team += cycle[cycle.index(next):]
         return
     else:
-        DFS(next_node)
+        visit[next] = True
+        cycle.append(next)
+        dfs(next)
 
-T = int(input())
-for _ in range(T):
+visit = []
+
+for _ in range(int(input())):
     n = int(input())
-    arr = [0]+list(map(int,input().split()))
-    visit = [False] * (n+1)
+    choice = [-1] + list(map(int,input().split()))
+    visit = [False] * (n + 1)
     team = []
 
-    for x in range(1,n+1):
-        if x == arr[x]:
-            visit[x] = True
-            team.append(x)
+    for i in range(1,n+1):
+        if choice[i] == i:
+            visit[i] = True
+            team.append(i)
 
-    for x in range(1,n+1):
-        if not visit[x]:
-            cycle = []
-            DFS(x)
+    for i in range(1,n+1):
+        if visit[i]: continue
+        cycle = []
+        dfs(i)
 
-
-    print(n-len(team))
+    print(n - len(team))
