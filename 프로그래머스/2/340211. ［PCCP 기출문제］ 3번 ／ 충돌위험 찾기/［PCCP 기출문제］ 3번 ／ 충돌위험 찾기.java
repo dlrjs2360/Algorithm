@@ -3,7 +3,7 @@ import java.util.*;
 class Solution {
     public int solution(int[][] points, int[][] routes) {
         int[] start, end;
-        boolean[][][] visit = new boolean[100000][101][101];
+        HashMap<String, Boolean> visit = new HashMap();
         Set<String> dpTime = new HashSet();
         int t;
         int x,y;
@@ -19,14 +19,13 @@ class Solution {
                 for (int[] r: route) {
                     x = r[0];
                     y = r[1];
-                    
+                    String s = t+"+"+x+"+"+y;
                     //System.out.println(x + " " + y);
-                    if (visit[t][x][y]) {
-                        String s = t+"+"+x+"+"+y;
+                    if (visit.getOrDefault(s,false)) {
                         dpTime.add(s);
                     }
                     else {
-                        visit[t][x][y] = true;
+                        visit.put(s,true);
                     }
                     t++;
                 }
